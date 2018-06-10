@@ -22,31 +22,16 @@ for i in range(train_image.shape()[0]):
 	writer.write(record=example.SerializeToString())
 writer.close()
 
-2 # convert imag to tfrecords
+ # convert imag to tfrecords
 filenames = tf.train.match_filenames_once(".\data\*.png")
 file_queue = tf.train.string_input_producer(filenames, shuffle=False, num_epochs=3)
 
-writer = tf.python_io.TFRecordWriter("img_demo.tfrecords")
-for f in filenames:
-	img = mpimg.imread(f)
-	img_raw = img.tostring()
-	example = tf.train.Example(
-		features = tf.train.Features(
-			feature = {
-				"image" : tf.train.Feature(bytes_list=tf.BytesList(value = [img_raw])),
-				"label" : tf.train.Feature(int64_list = tf.tain.Int64List(value=[lable])
-			}
-		)
-	)
-	
-	writer.write(record = example.SerializeToString())
 	
 writer.close()
 
 
 
 
-3. #Read tfrecords
 
 reader = tf.TFRecordReader()
 filename = tf.train.match_filenames_once('img_demo.tfrecords')
